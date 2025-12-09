@@ -1,32 +1,27 @@
 
 export interface QuizAnswers {
   gender?: 'male' | 'female';
-  age_range?: string;
-  zip_code?: string;
-  pain_regions?: string[];
-  primary_region?: string;
-  pain_duration?: string;
-  avg_pain_level?: number;
-  worst_pain_level?: number;
-  radiating_pain?: boolean;
-  radiating_areas?: string[];
-  movement_triggers?: string[];
-  triggers?: string[];
-  surgery_check?: boolean;
-  surgery_type?: string;
-  diagnoses?: string[];
-  treatments_tried?: string[];
-  relief_level?: string;
-  treatment_effect?: string;
-  sleep_disruption?: boolean;
-  mood_impact?: string[];
-  meds_current?: boolean;
-  upcoming_event?: boolean;
-  upcoming_event_details?: string;
-  activity_goal?: string;
-  activity_goal_other?: string;
-  time_availability?: string;
-  biggest_concern?: string;
+  'age'?: string; // age question id is 'age'
+  zip_code?: string; // q14 id is 'zip-check' but verifies generic input? ID in constants is 'zip-check'.
+  'zip-check'?: string;
+  'pain-regions'?: string[];
+  'primary-region'?: string;
+  'pain-duration'?: string; // id: 'pain-duration'. types had 'pain_duration'
+  'avg-pain'?: number; // id: 'avg-pain'. types had 'avg_pain_level'
+  'worst-pain'?: number; // id: 'worst-pain'. types had 'worst_pain_level'
+  'radiating-pain'?: boolean;
+  'movement-triggers'?: string[];
+  'prior-surgery'?: string; // id: 'prior-surgery'
+  'diagnosis'?: string[]; // id: 'diagnosis'
+  'treatments-tried'?: string[];
+  'relief-level'?: string;
+  'sleep-disruption'?: boolean;
+  'mood-impact'?: string[];
+  'meds-current'?: boolean;
+  'upcoming-event'?: string; // It receives 'yes'/'no' string from FullButtons? Or boolean? FullButtons returns value string.
+  'activity-goal'?: string;
+  'time-availability'?: string;
+  'biggest-concern'?: string;
   firstName?: string;
   lastName?: string;
   email?: string;

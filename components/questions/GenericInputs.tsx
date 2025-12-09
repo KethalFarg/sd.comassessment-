@@ -54,8 +54,8 @@ export const FullButtons: React.FC<Props> = ({ config }) => {
             onClick={() => handleSelect(opt.value)}
             disabled={showMicroCopy}
             className={`w-full py-4 px-6 rounded-2xl border transition-all active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg backdrop-blur-sm ${isSelected
-                ? 'bg-brand-teal/30 border-brand-teal text-white font-bold'
-                : 'bg-white/10 hover:bg-white/20 border-white/5 hover:border-brand-teal/50 text-white font-medium'
+              ? 'bg-brand-teal/30 border-brand-teal text-white font-bold'
+              : 'bg-white/10 hover:bg-white/20 border-white/5 hover:border-brand-teal/50 text-white font-medium'
               } ${showMicroCopy ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             {Icon && <Icon size={20} className="text-brand-lightTeal" />}
@@ -92,7 +92,7 @@ export const YesNo: React.FC<Props> = ({ config }) => {
   return (
     <div className="flex flex-col gap-6 w-full max-w-md mx-auto">
       {questionText !== config.question && (
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center leading-tight">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center leading-tight mt-6 md:mt-8 mb-2">
           {questionText}
         </h2>
       )}
@@ -104,8 +104,8 @@ export const YesNo: React.FC<Props> = ({ config }) => {
               key={opt.label}
               onClick={() => handleSelect(opt)}
               className={`flex-1 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all hover:scale-105 active:scale-95 shadow-lg backdrop-blur-sm ${isYes
-                  ? 'bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20'
-                  : 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20'
+                ? 'bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20'
+                : 'bg-red-500/10 border-red-500/30 hover:bg-red-500/20'
                 }`}
             >
               {opt.icon && <opt.icon size={32} className={isYes ? 'text-emerald-400' : 'text-red-400'} />}

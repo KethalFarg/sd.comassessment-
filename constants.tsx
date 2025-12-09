@@ -44,6 +44,22 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         type: 'picture-tiles',
         question: "What's your age range?",
         autoAdvance: true,
+        componentProps: {
+            conditionalImages: {
+                male: {
+                    '18-34': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400&h=400',
+                    '35-49': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400&h=400',
+                    '50-64': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&h=400',
+                    '65+': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&h=400'
+                },
+                female: {
+                    '18-34': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&h=400',
+                    '35-49': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=400',
+                    '50-64': 'https://images.unsplash.com/photo-1566616213836-2a65d3a20959?auto=format&fit=crop&q=80&w=400&h=400', // Senior woman (actually 65+ usually but works)
+                    '65+': 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=80&w=400&h=400' // Generic senior (hands/neutral) or finding better
+                }
+            }
+        },
         options: [
             { value: '18-34', label: '18–34', image: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&fit=crop&q=80&w=400&h=400' },
             { value: '35-49', label: '35–49', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400&h=400' },
@@ -68,7 +84,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
             { value: 'Leg(s)', label: 'Leg(s)', icon: Activity },
         ],
         next: (answers) => {
-            const regions = answers.pain_regions || [];
+            const regions = answers['pain-regions'] || [];
             return regions.length >= 2 ? 'primary-region' : 'radiating-pain';
         }
     },
@@ -82,7 +98,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         question: "Which area bothers you the most?",
         autoAdvance: true,
         options: [], // Will be populated dynamically from Q3 selections
-        componentProps: { dynamicFromPrevious: 'pain_regions' },
+        componentProps: { dynamicFromPrevious: 'pain-regions' }, // Fixed key
         next: 'radiating-pain'
     },
 
@@ -92,13 +108,13 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         section: 'profile',
         theme: 'dark',
         type: 'yes-no',
-        question: "Does pain or tingling travel into your arm or hand?", // Default for Neck
+        question: "", // Left empty to be handled by conditional logic in component
+        subtext: "",
         componentProps: {
             conditionalQuestion: true,
             questions: {
                 'Neck': "Does pain or tingling travel into your arm or hand?",
-                'Low-back': "Does pain or tingling travel into your buttock, leg, or foot?",
-                'default': "Does pain ever feel sharp, electric, or shooting?"
+                'default': "Does pain ever travel into your buttock, leg, or foot, or feel sharp, electric, or shooting?"
             }
         },
         options: [
@@ -200,7 +216,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
             { value: 'Fusion / rods / screws', label: 'Fusion / rods / screws' },
             { value: 'Other', label: 'Other' },
         ],
-        next: (answers) => answers.prior_surgery === 'Fusion / rods / screws' ? 'medical-exit' : 'diagnosis'
+        next: (answers) => answers['prior-surgery'] === 'Fusion / rods / screws' ? 'medical-exit' : 'diagnosis'
     },
 
     // Q11: Doctor Diagnosis
@@ -238,7 +254,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
             { value: 'Other conservative care', label: 'Other conservative care', icon: MoreHorizontal },
         ],
         next: (answers) => {
-            const treatments = answers.treatments_tried || [];
+            const treatments = answers['treatments-tried'] || [];
             return treatments.length > 0 ? 'relief-level' : 'zip-check';
         }
     },

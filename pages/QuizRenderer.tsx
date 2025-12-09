@@ -8,8 +8,8 @@ import { PainSlider } from '../components/questions/PainSlider';
 import { FullButtons, YesNo, TextInput } from '../components/questions/GenericInputs';
 import { LoadingSlide } from '../components/info/LoadingSlide';
 import { BodyMapSelector } from '../components/questions/BodyMapSelector';
-import { FinalReport } from './FinalReport';
-import { PainProfile } from '../components/results/PainProfile';
+import FinalReport from './FinalReport';
+import PainProfile from '../components/results/PainProfile';
 import { InfoSlide } from '../components/questions/InfoSlide';
 import { SplitImageOptions } from '../components/questions/SplitImageOptions';
 import { MedicalExit } from '../components/forms/MedicalExit';
@@ -82,10 +82,10 @@ export const QuizRenderer: React.FC = () => {
 
       {showHeader && <Header />}
 
-      <main className={`relative z-10 w-full max-w-2xl mx-auto px-6 flex-1 flex flex-col ${isLightTheme ? 'justify-center py-6' : 'pt-20 pb-6'}`}>
+      <main className={`relative z-10 w-full ${config.type === 'pain-profile' || config.type === 'final-report' ? 'max-w-full' : 'max-w-2xl mx-auto px-6'} flex-1 flex flex-col ${isLightTheme ? 'justify-center py-6' : 'pt-20 pb-6'}`}>
         <div key={config.id} className="animate-fade-in flex flex-col h-full">
-          {/* Question Text Header (Hide for Info Slides/Results/Loading/Phone) */}
-          {(!isResultScreen && config.type !== 'loading' && config.type !== 'info-slide' && config.type !== 'medical-exit' && config.type !== 'phone-capture' && config.type !== 'pain-profile') && (
+          {/* Question Text Header (Hide for Info Slides/Results/Loading/Phone/Empty Question) */}
+          {(!isResultScreen && config.question && config.type !== 'loading' && config.type !== 'info-slide' && config.type !== 'medical-exit' && config.type !== 'phone-capture' && config.type !== 'pain-profile') && (
             <div className="text-center mb-8 md:mb-10 mt-6 md:mt-8 flex-shrink-0">
               <h1 className={`text-2xl md:text-3xl font-bold mb-3 leading-tight ${isLightTheme ? 'text-brand-dark' : 'text-white drop-shadow-md'}`}>
                 {config.question}
