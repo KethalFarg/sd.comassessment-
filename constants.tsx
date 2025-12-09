@@ -25,13 +25,13 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         id: 'gender',
         section: 'profile',
         theme: 'light',
-        type: 'picture-tiles',
+        type: 'gender-landing',
         question: "Check Your Fit for Non-Surgical Spinal Decompression",
         subtext: "We'll compare your situation with clinical patterns commonly seen in patients who improve. Personalized insights in under 90 seconds.",
         autoAdvance: true,
         options: [
-            { value: 'male', label: 'Male', image: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&q=80&w=400&h=533' },
-            { value: 'female', label: 'Female', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=533' },
+            { value: 'male', label: 'Male', image: 'https://imagedelivery.net/ye6TBwd9tSy8dGYL2VHjgg/d8b4c17c-2fbb-421b-3286-f0b458b82a00/public' },
+            { value: 'female', label: 'Female', image: 'https://imagedelivery.net/ye6TBwd9tSy8dGYL2VHjgg/cc3b2ad8-4a2e-420e-d5d5-1ef3bf24c000/public' },
         ],
         next: 'age'
     },

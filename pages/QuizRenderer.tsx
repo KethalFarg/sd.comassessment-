@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuiz } from '../context/QuizContext';
 import { QUIZ_CONFIG } from '../constants';
 import { Header } from '../components/layout/Header';
+import { GenderLanding } from '../components/questions/GenderLanding';
 import { PictureTiles } from '../components/questions/PictureTiles';
 import { TileGrid } from '../components/questions/TileGrid';
 import { PainSlider } from '../components/questions/PainSlider';
@@ -43,6 +44,7 @@ export const QuizRenderer: React.FC = () => {
   // Render logic components
   const renderComponent = (c: QuestionConfig) => {
     switch (c.type) {
+      case 'gender-landing': return <GenderLanding config={c} />;
       case 'picture-tiles': return <PictureTiles config={c} />;
       case 'tile-grid':
       case 'icon-buttons': return <TileGrid config={c} />;
@@ -72,7 +74,7 @@ export const QuizRenderer: React.FC = () => {
   const isResultScreen = config.type === 'final-report';
   // Show header on everything except: Results, Loading, Start Screen (gender), Phone Capture, Name-Email Capture, Pain Profile, Medical Exit
   // Explicitly ALLOWED now: info-slide
-  const showHeader = !isResultScreen && config.type !== 'loading' && config.id !== 'gender' && config.type !== 'phone-capture' && config.type !== 'pain-profile' && config.type !== 'medical-exit' && !(config.type === 'form' && config.componentProps?.formType === 'name-email');
+  const showHeader = !isResultScreen && config.type !== 'loading' && config.id !== 'gender' && config.type !== 'phone-capture' && config.type !== 'pain-profile' && config.type !== 'gender-landing' && config.type !== 'medical-exit' && !(config.type === 'form' && config.componentProps?.formType === 'name-email');
 
   return (
     <div className={`h-[100dvh] relative font-sans overflow-hidden flex flex-col transition-colors duration-700 ${isLightTheme ? 'bg-[#f0f2f5] text-brand-dark' : 'text-white'}`}>
@@ -82,10 +84,10 @@ export const QuizRenderer: React.FC = () => {
 
       {showHeader && <Header />}
 
-      <main className={`relative z-10 w-full ${config.type === 'pain-profile' || config.type === 'final-report' ? 'max-w-full' : 'max-w-2xl mx-auto px-6'} flex-1 flex flex-col ${isLightTheme ? 'justify-center py-6' : 'pt-20 pb-6'}`}>
+      <main className={`relative z-10 w-full ${config.type === 'pain-profile' || config.type === 'final-report' || config.type === 'gender-landing' ? 'max-w-full' : 'max-w-2xl mx-auto px-6'} flex-1 flex flex-col ${isLightTheme && config.type !== 'gender-landing' ? 'justify-center py-6' : config.type === 'gender-landing' ? 'py-0' : 'pt-20 pb-6'}`}>
         <div key={config.id} className="animate-fade-in flex flex-col h-full">
           {/* Question Text Header (Hide for Info Slides/Results/Loading/Phone/Empty Question) */}
-          {(!isResultScreen && config.question && config.type !== 'loading' && config.type !== 'info-slide' && config.type !== 'medical-exit' && config.type !== 'phone-capture' && config.type !== 'pain-profile') && (
+          {(!isResultScreen && config.question && config.type !== 'loading' && config.type !== 'info-slide' && config.type !== 'medical-exit' && config.type !== 'phone-capture' && config.type !== 'pain-profile' && config.type !== 'gender-landing') && (
             <div className="text-center mb-8 md:mb-10 mt-6 md:mt-8 flex-shrink-0">
               <h1 className={`text-2xl md:text-3xl font-bold mb-3 leading-tight ${isLightTheme ? 'text-brand-dark' : 'text-white drop-shadow-md'}`}>
                 {config.question}

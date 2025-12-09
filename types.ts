@@ -46,7 +46,8 @@ export type QuestionType =
   | 'body-map'
   | 'split-image-options'
   | 'medical-exit'
-  | 'phone-capture'; // New
+  | 'phone-capture'
+  | 'gender-landing';
 
 export interface QuestionOption {
   value: string | boolean | number;
