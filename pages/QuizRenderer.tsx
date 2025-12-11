@@ -34,6 +34,17 @@ const Background: React.FC = () => (
   </div>
 );
 
+// Custom Radial Gradient Background for Light Theme
+const LightBackground: React.FC = () => (
+  <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    {/* Radial Gradient: Lighter center (#f2feff) fading to deeper teal edges for higher contrast */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#f2feff] via-[#cceaecef] to-[#88babb]" />
+
+    {/* Intensified Glow behind content */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#0590a8]/10 rounded-full blur-[120px]" />
+  </div>
+);
+
 export const QuizRenderer: React.FC = () => {
   const { state } = useQuiz();
   const config = QUIZ_CONFIG.find((q) => q.id === state.currentStepId);
@@ -77,14 +88,19 @@ export const QuizRenderer: React.FC = () => {
   const showHeader = !isResultScreen && config.type !== 'loading' && config.id !== 'gender' && config.type !== 'phone-capture' && config.type !== 'pain-profile' && config.type !== 'gender-landing' && config.type !== 'medical-exit' && !(config.type === 'form' && config.componentProps?.formType === 'name-email');
 
   return (
-    <div className={`h-[100dvh] relative font-sans overflow-hidden flex flex-col transition-colors duration-700 ${isLightTheme ? 'bg-[#f0f2f5] text-brand-dark' : 'text-white'}`}>
+    <div className={`h-[100dvh] relative font-sans overflow-hidden flex flex-col transition-colors duration-700 ${isLightTheme ? 'bg-[#d3e6e8] text-brand-dark' : 'text-white'}`}>
 
-      {/* Background: Only show dark bubble background if theme is dark */}
-      {!isLightTheme && <Background />}
+      {/* Backgrounds */}
+      {isLightTheme ? <LightBackground /> : <Background />}
 
       {showHeader && <Header />}
 
-      <main className={`relative z-10 w-full ${config.type === 'pain-profile' || config.type === 'final-report' || config.type === 'gender-landing' ? 'max-w-full' : 'max-w-2xl mx-auto px-6'} flex-1 flex flex-col ${isLightTheme && config.type !== 'gender-landing' ? 'justify-center py-6' : config.type === 'gender-landing' ? 'py-0' : 'pt-20 pb-6'}`}>
+      <main className={`relative z-10 w-full ${config.type === 'pain-profile' || config.type === 'final-report' || config.type === 'gender-landing' ? 'max-w-full' : 'max-w-2xl mx-auto px-6'} flex-1 flex flex-col ${config.type === 'gender-landing'
+        ? 'py-0'
+        : showHeader
+          ? 'pt-24 pb-6'
+          : 'justify-center py-6'
+        }`}>
         <div key={config.id} className="animate-fade-in flex flex-col h-full">
           {/* Question Text Header (Hide for Info Slides/Results/Loading/Phone/Empty Question) */}
           {(!isResultScreen && config.question && config.type !== 'loading' && config.type !== 'info-slide' && config.type !== 'medical-exit' && config.type !== 'phone-capture' && config.type !== 'pain-profile' && config.type !== 'gender-landing') && (

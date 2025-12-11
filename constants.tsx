@@ -1,11 +1,29 @@
-
 import { QuestionConfig } from './types';
 import {
     User, Activity, Zap, Pill, MoreHorizontal,
     Check, X, AlertCircle, Moon, Users,
-    Briefcase, Car, Armchair,
+    Briefcase, Car, Armchair, PersonStanding,
     Move, Clock, DollarSign, Shield, ThumbsUp, Frown, HelpCircle
 } from 'lucide-react';
+import { BsPersonStanding } from "react-icons/bs";
+import { FaWalking } from "react-icons/fa";
+import { GiWeightLiftingUp } from "react-icons/gi";
+import { FaHeadSideCough } from "react-icons/fa6";
+import HerniatedDisc from './components/icons/HerniatedDisc';
+import Sciatica from './components/icons/Sciatica';
+import BulgingDisc from './components/icons/BulgingDisc';
+import DegenerativeDisc from './components/icons/DegenerativeDisc';
+import SpinalStenosis from './components/icons/SpinalStenosis';
+import Sleep from './components/icons/Sleep';
+import Age20 from './components/icons/Age20';
+import Age30 from './components/icons/Age30';
+import Age45 from './components/icons/Age45';
+import Age55 from './components/icons/Age55';
+import StickBack from './components/icons/StickBack';
+import Age20F from './components/icons/Age20F';
+import Age30F from './components/icons/Age30F';
+import Age40F from './components/icons/Age40F';
+import Age60F from './components/icons/Age60F';
 
 // Sections for the Header Progress Bar
 export const PROGRESS_SECTIONS = [
@@ -40,23 +58,23 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'age',
         section: 'profile',
-        theme: 'dark',
+        theme: 'light',
         type: 'picture-tiles',
         question: "What's your age range?",
         autoAdvance: true,
         componentProps: {
             conditionalImages: {
                 male: {
-                    '18-34': 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400&h=400',
-                    '35-49': 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400&h=400',
-                    '50-64': 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&h=400',
-                    '65+': 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&h=400'
+                    '18-34': Age20,
+                    '35-49': Age30,
+                    '50-64': Age45,
+                    '65+': Age55
                 },
                 female: {
-                    '18-34': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400&h=400',
-                    '35-49': 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=400',
-                    '50-64': 'https://images.unsplash.com/photo-1566616213836-2a65d3a20959?auto=format&fit=crop&q=80&w=400&h=400', // Senior woman (actually 65+ usually but works)
-                    '65+': 'https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?auto=format&fit=crop&q=80&w=400&h=400' // Generic senior (hands/neutral) or finding better
+                    '18-34': Age20F,
+                    '35-49': Age30F,
+                    '50-64': Age40F,
+                    '65+': Age60F
                 }
             }
         },
@@ -69,19 +87,22 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         next: 'pain-regions'
     },
 
-    // Q3: Pain Regions (multi-select body map)
     {
         id: 'pain-regions',
         section: 'profile',
-        theme: 'dark',
-        type: 'tile-grid',
-        question: "Tap all areas that hurt right now.",
+        theme: 'light',
+        type: 'body-map',
+        question: "What is causing you the most discomfort?",
+        subtext: "(select all that apply)",
         multiSelect: true,
+        componentProps: {
+            image: 'https://imagedelivery.net/ye6TBwd9tSy8dGYL2VHjgg/31559b2d-771f-4b70-855d-f8b90c9fdc00/public'
+        },
         options: [
-            { value: 'Neck', label: 'Neck', icon: Activity },
-            { value: 'Low-back', label: 'Low-back', icon: Activity },
-            { value: 'Buttock', label: 'Buttock', icon: Activity },
-            { value: 'Leg(s)', label: 'Leg(s)', icon: Activity },
+            { value: 'Neck', label: 'Neck' },
+            { value: 'Arm / Shoulder', label: 'Arm / Shoulder' },
+            { value: 'Back', label: 'Back' },
+            { value: 'Buttocks / Leg', label: 'Buttocks / Leg' },
         ],
         next: (answers) => {
             const regions = answers['pain-regions'] || [];
@@ -93,7 +114,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'primary-region',
         section: 'profile',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "Which area bothers you the most?",
         autoAdvance: true,
@@ -106,7 +127,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'radiating-pain',
         section: 'profile',
-        theme: 'dark',
+        theme: 'light',
         type: 'yes-no',
         question: "", // Left empty to be handled by conditional logic in component
         subtext: "",
@@ -114,8 +135,10 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
             conditionalQuestion: true,
             questions: {
                 'Neck': "Does pain or tingling travel into your arm or hand?",
+                'Arm / Shoulder': "Does pain or tingling travel into your arm or hand?",
                 'default': "Does pain ever travel into your buttock, leg, or foot, or feel sharp, electric, or shooting?"
-            }
+            },
+            VisualComponent: StickBack
         },
         options: [
             { value: true, label: 'Yes', icon: Zap },
@@ -145,7 +168,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'avg-pain',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'pain-slider',
         question: "On an average day, how bad is your pain?",
         subtext: "0 = No pain, 10 = Worst imaginable",
@@ -156,7 +179,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'worst-pain',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'pain-slider',
         question: "At its worst, how bad does it get?",
         subtext: "0 = No pain, 10 = Worst imaginable",
@@ -167,7 +190,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'movement-triggers',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'tile-grid',
         question: "Which movements flare your pain the fastest?",
         subtext: "Pick up to 3",
@@ -175,11 +198,11 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         maxSelections: 3,
         options: [
             { value: 'Sitting', label: 'Sitting', icon: Armchair },
-            { value: 'Standing', label: 'Standing', icon: Activity },
-            { value: 'Walking', label: 'Walking', icon: Activity },
-            { value: 'Bending / lifting', label: 'Bending / lifting', icon: Move },
+            { value: 'Standing', label: 'Standing', icon: BsPersonStanding },
+            { value: 'Walking', label: 'Walking', icon: FaWalking },
+            { value: 'Bending / lifting', label: 'Bending / lifting', icon: GiWeightLiftingUp },
             { value: 'Driving', label: 'Driving', icon: Car },
-            { value: 'Coughing / sneezing', label: 'Coughing / sneezing', icon: AlertCircle },
+            { value: 'Coughing / sneezing', label: 'Coughing / sneezing', icon: FaHeadSideCough },
         ],
         next: 'duration'
     },
@@ -188,10 +211,14 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'duration',
         section: 'spine',
-        theme: 'dark',
-        type: 'full-buttons',
+        theme: 'light',
+        type: 'split-image-options',
         question: "How long has this been going on?",
         autoAdvance: true,
+        componentProps: {
+            image: 'https://imagedelivery.net/ye6TBwd9tSy8dGYL2VHjgg/23986ee2-ece3-4925-bed4-71e95a19a100/public',
+            reverse: true
+        },
         options: [
             { value: 'Less than 3 months', label: 'Less than 3 months' },
             { value: '3–12 months', label: '3–12 months' },
@@ -205,7 +232,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'prior-surgery',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "Have you had spine surgery in the area that bothers you most?",
         autoAdvance: true,
@@ -223,16 +250,16 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'diagnosis',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'tile-grid',
         question: "Have doctors used any of these terms for your condition?",
         multiSelect: true,
         options: [
-            { value: 'Herniated disc', label: 'Herniated disc', icon: Activity },
-            { value: 'Bulging disc', label: 'Bulging disc', icon: Activity },
-            { value: 'Degenerative disc disease', label: 'Degenerative disc disease', icon: Clock },
-            { value: 'Sciatica', label: 'Sciatica', icon: Zap },
-            { value: 'Spinal stenosis', label: 'Spinal stenosis', icon: Activity },
+            { value: 'Herniated disc', label: 'Herniated disc', icon: HerniatedDisc },
+            { value: 'Bulging disc', label: 'Bulging disc', icon: BulgingDisc },
+            { value: 'Degenerative disc disease', label: 'Degenerative disc disease', icon: DegenerativeDisc },
+            { value: 'Sciatica', label: 'Sciatica', icon: Sciatica },
+            { value: 'Spinal stenosis', label: 'Spinal stenosis', icon: SpinalStenosis },
             { value: 'Not sure / Other / None', label: 'Not sure / Other / None', icon: HelpCircle },
         ],
         next: 'treatments-tried'
@@ -242,7 +269,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'treatments-tried',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'tile-grid',
         question: "What have you already tried for this?",
         multiSelect: true,
@@ -263,7 +290,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'relief-level',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "How well did those treatments work?",
         autoAdvance: true,
@@ -280,7 +307,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'zip-check',
         section: 'spine',
-        theme: 'dark',
+        theme: 'light',
         type: 'text-input',
         question: "What is your ZIP/postal code?",
         subtext: "Let's confirm if a provider is near you.",
@@ -310,13 +337,16 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'sleep-disruption',
         section: 'lifestyle',
-        theme: 'dark',
+        theme: 'light',
         type: 'yes-no',
         question: "Does your pain ever wake you up or keep you from sleeping?",
         options: [
             { value: true, label: 'Yes', icon: Moon },
             { value: false, label: 'No', icon: X }
         ],
+        componentProps: {
+            VisualComponent: Sleep
+        },
         next: 'mood-impact'
     },
 
@@ -324,7 +354,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'mood-impact',
         section: 'lifestyle',
-        theme: 'dark',
+        theme: 'light',
         type: 'tile-grid',
         question: "How has this pain been affecting your mood lately?",
         subtext: "Pick up to 2",
@@ -344,13 +374,16 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'meds-current',
         section: 'lifestyle',
-        theme: 'dark',
+        theme: 'light',
         type: 'yes-no',
         question: "Are you currently taking pain medication for this?",
         options: [
             { value: true, label: 'Yes', icon: Pill },
             { value: false, label: 'No', icon: X }
         ],
+        componentProps: {
+            image: 'https://imagedelivery.net/ye6TBwd9tSy8dGYL2VHjgg/da69f16e-dc1e-4c07-d7ea-16dd85ca9a00/public'
+        },
         next: 'info-disc-rehab'
     },
 
@@ -375,7 +408,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'upcoming-event',
         section: 'plan',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "Do you have an important event in the next 6–12 weeks where you'd love to feel better?",
         options: [
@@ -393,7 +426,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'activity-goal',
         section: 'plan',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "What's the first thing you'd like to get back to?",
         autoAdvance: true,
@@ -416,7 +449,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'time-availability',
         section: 'plan',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "If this could actually help long-term, could you free up 2–3 brief visits per week?",
         autoAdvance: true,
@@ -433,7 +466,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     {
         id: 'biggest-concern',
         section: 'plan',
-        theme: 'dark',
+        theme: 'light',
         type: 'full-buttons',
         question: "What's your biggest concern about spinal decompression therapy?",
         options: [
@@ -461,7 +494,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     // Name + Email Capture
     {
         id: 'name-email-capture',
-        theme: 'dark',
+        theme: 'light',
         type: 'form',
         componentProps: { formType: 'name-email' },
         next: 'mcclure-loading'
@@ -487,7 +520,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
     // Phone + ZIP Capture (with loading)
     {
         id: 'phone-capture',
-        theme: 'dark',
+        theme: 'light',
         type: 'phone-capture',
         next: 'final-report'
     },

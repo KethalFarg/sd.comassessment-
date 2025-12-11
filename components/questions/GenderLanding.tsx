@@ -3,6 +3,8 @@ import { useQuiz } from '../../context/QuizContext';
 import { QuestionConfig } from '../../types';
 import betterJointLogo from '@/src/assets/better-joint-logo.png';
 
+const SHADOW_LIGHT = '5px 5px 10px rgba(1, 75, 92, 0.6), -4px -4px 8px rgba(255, 255, 255, 1)';
+
 interface GenderLandingProps {
     config?: QuestionConfig;
 }
@@ -62,13 +64,15 @@ export const GenderLanding: React.FC<GenderLandingProps> = ({ config }) => {
                             <div className="flex gap-4 w-full max-w-md">
                                 <button
                                     onClick={() => handleSelect('female')}
-                                    className="flex-1 bg-[#0098b0] hover:bg-[#007a8d] text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 text-lg"
+                                    style={{ boxShadow: SHADOW_LIGHT }}
+                                    className="flex-1 bg-white border-2 border-[#036c7e] text-[#036c7e] font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98] text-lg hover:bg-[#036c7e]/5"
                                 >
                                     Female
                                 </button>
                                 <button
                                     onClick={() => handleSelect('male')}
-                                    className="flex-1 bg-[#f2674b] hover:bg-[#d14d33] text-white font-bold py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 text-lg"
+                                    style={{ boxShadow: SHADOW_LIGHT }}
+                                    className="flex-1 bg-white border-2 border-[#036c7e] text-[#036c7e] font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98] text-lg hover:bg-[#036c7e]/5"
                                 >
                                     Male
                                 </button>

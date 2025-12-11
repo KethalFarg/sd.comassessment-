@@ -17,6 +17,9 @@ export default {
             }
         },
         extend: {
+            fontFamily: {
+                sans: ['Outfit', 'sans-serif'],
+            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
@@ -65,7 +68,14 @@ export default {
                     'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
                     border: 'hsl(var(--sidebar-border))',
                     ring: 'hsl(var(--sidebar-ring))'
-                }
+                },
+                'question-btn': '#0590a8',
+                'brand-teal': '#0298b3', // Adding explicitly since it was missing in view but used in code
+                'brand-lightTeal': '#2dd4bf', // Adding explicitly
+            },
+            boxShadow: {
+                'neumorphic-button': '12px 12px 24px rgba(1, 75, 92, 0.5), -8px -8px 16px rgba(255, 255, 255, 0.9)',
+                'neumorphic-pressed': 'inset 6px 6px 10px rgba(1, 75, 92, 0.3), inset -6px -6px 10px rgba(255, 255, 255, 0.8)',
             },
             backgroundImage: {
                 'brand-gradient': 'linear-gradient(135deg, hsl(var(--brand-gradient-start)), hsl(var(--brand-gradient-end)))',

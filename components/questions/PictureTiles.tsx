@@ -1,8 +1,10 @@
-
 import React from 'react';
 import { QuestionConfig, QuestionOption } from '../../types';
 import { useQuiz } from '../../context/QuizContext';
 import { User } from 'lucide-react';
+
+const SHADOW_LIGHT = '5px 5px 10px rgba(1, 75, 92, 0.6), -4px -4px 8px rgba(255, 255, 255, 1)';
+const SHADOW_PRESSED = 'inset 4px 4px 8px rgba(1, 75, 92, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.9)';
 
 interface Props {
   config: QuestionConfig;
@@ -10,6 +12,7 @@ interface Props {
 
 export const PictureTiles: React.FC<Props> = ({ config }) => {
   const { handleAnswer, nextQuestion, state } = useQuiz();
+  const [activeId, setActiveId] = React.useState<string | null>(null);
 
   const handleSelect = (option: QuestionOption) => {
     handleAnswer(config.id as any, option.value);
@@ -40,46 +43,71 @@ export const PictureTiles: React.FC<Props> = ({ config }) => {
     <div className={`grid gap-4 w-full max-w-xl mx-auto ${isGrid ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2'}`}>
       {config.options?.map((option) => {
         const displayImage = getOptionImage(option);
+        const isActive = activeId === String(option.value);
 
         return (
           <button
             key={String(option.value)}
             onClick={() => handleSelect(option)}
+            onMouseDown={() => setActiveId(String(option.value))}
+            onMouseUp={() => setActiveId(null)}
+            onMouseLeave={() => setActiveId(null)}
+            onTouchStart={() => setActiveId(String(option.value))}
+            onTouchEnd={() => setActiveId(null)}
+            style={{
+              boxShadow: isLightMode
+                ? (isActive ? SHADOW_PRESSED : SHADOW_LIGHT)
+                : undefined
+            }}
             className={`
-            group relative overflow-hidden rounded-2xl transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 flex flex-col w-full
+            group relative overflow-hidden rounded-2xl transition-all duration-150 flex flex-col w-full
             ${isLightMode
-                ? 'bg-white border-2 border-gray-100 hover:border-brand-teal text-brand-dark'
-                : 'bg-white/10 border-2 border-transparent hover:border-brand-teal/50 text-white'
+                ? `bg-white border-2 border-[#0590a8] text-brand-dark ${isActive ? 'scale-[0.98]' : 'hover:translate-y-[1px]'}`
+                : 'bg-white/10 border-2 border-transparent hover:border-brand-teal/50 text-white shadow-md hover:shadow-xl hover:-translate-y-1'
               }
           `}
           >
+            {/* Image Container */}
             <div className={`w-full relative ${isGrid ? 'aspect-square' : 'aspect-[3/4] md:aspect-[4/3]'} ${isLightMode ? 'bg-gray-200' : 'bg-gray-800'}`}>
               {/* Fallback Icon */}
               <div className={`absolute inset-0 flex items-center justify-center ${isLightMode ? 'text-gray-400' : 'text-white/20'}`}>
                 <User size={isGrid ? 48 : 64} strokeWidth={1.5} />
               </div>
 
-              {/* Image */}
+              {/* Image or Component */}
               {displayImage && (
-                <img
-                  src={displayImage}
-                  alt={option.label}
-                  className="absolute inset-0 h-full w-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
+                typeof displayImage === 'string' ? (
+                  <img
+                    src={displayImage}
+                    alt={option.label}
+                    className="absolute inset-0 h-full w-full object-cover z-10 transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-white z-10">
+                    {/* Dynamic component rendering */}
+                    {(() => {
+                      const VisualComponent = displayImage as React.ElementType;
+                      return <VisualComponent className="w-full h-full object-cover p-0" />;
+                    })()}
+                  </div>
+                )
               )}
 
-              {/* Overlay Gradient */}
-              <div className={`absolute inset-0 transition-opacity duration-300 z-20 ${isLightMode ? 'bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-90' : 'bg-gradient-to-t from-black/90 via-transparent to-transparent'}`} />
+              {/* Subtle inner shadow for depth */}
+              <div className="absolute inset-0 shadow-[inset_0_0_20px_rgba(0,0,0,0.1)] z-20 pointer-events-none" />
+            </div>
 
-              {/* Label Area */}
-              <div className="absolute bottom-0 left-0 w-full p-4 z-30 flex items-center justify-center text-center">
-                <span className={`${isGrid ? 'text-xl' : 'text-2xl'} font-bold text-white tracking-wide drop-shadow-md`}>
-                  {option.label}
-                </span>
-              </div>
+            {/* Footer / Label Area */}
+            <div className={`w-full py-4 relative z-30 flex items-center justify-center text-center transition-colors duration-300 ${isLightMode
+              ? 'bg-gradient-to-r from-[#0590a8] to-[#036c7e]'
+              : 'bg-white/5'
+              }`}>
+              <span className={`${isGrid ? 'text-xl' : 'text-2xl'} font-bold text-white tracking-wide`}>
+                {option.label}
+              </span>
             </div>
           </button>
         );

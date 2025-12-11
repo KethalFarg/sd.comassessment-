@@ -1,12 +1,15 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useQuiz } from '../../context/QuizContext';
-import { PROGRESS_SECTIONS } from '../../constants';
+import { PROGRESS_SECTIONS, QUIZ_CONFIG } from '../../constants';
 
 export const Header: React.FC = () => {
   const { prevQuestion, state, getCurrentSection, getQuestionIndex } = useQuiz();
   const currentSectionId = getCurrentSection();
   const { current, total } = getQuestionIndex();
+
+  const config = QUIZ_CONFIG.find(q => q.id === state.currentStepId);
+  const isLight = config?.theme === 'light';
 
   // Check if we are in a tracked section
   const isValidSection = PROGRESS_SECTIONS.some(s => s.id === currentSectionId);
@@ -19,16 +22,16 @@ export const Header: React.FC = () => {
         <button
           onClick={prevQuestion}
           disabled={state.history.length === 0}
-          className={`w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 transition-all backdrop-blur-sm ${state.history.length === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all backdrop-blur-sm ${state.history.length === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100'} ${isLight ? 'bg-gray-200 hover:bg-gray-300 text-gray-800' : 'bg-white/10 hover:bg-white/20 text-white'
             }`}
         >
-          <ArrowLeft size={20} className="text-white" />
+          <ArrowLeft size={20} />
         </button>
 
         {/* Center: Current Section Label (Only if valid section) */}
         <div className="text-center pointer-events-none">
           {isValidSection && (
-            <span className="text-white font-semibold text-lg tracking-wide uppercase opacity-90">
+            <span className={`font-semibold text-lg tracking-wide uppercase opacity-90 ${isLight ? 'text-brand-dark' : 'text-white'}`}>
               {PROGRESS_SECTIONS.find(s => s.id === currentSectionId)?.label || ''}
             </span>
           )}
@@ -37,7 +40,7 @@ export const Header: React.FC = () => {
         {/* Right: Counter (Only if valid section and count > 0) */}
         <div className="w-10 flex justify-end">
           {isValidSection && current > 0 && (
-            <span className="text-white/60 font-medium text-sm whitespace-nowrap">
+            <span className={`font-medium text-sm whitespace-nowrap ${isLight ? 'text-gray-500' : 'text-white/60'}`}>
               Question {current} of {total}
             </span>
           )}
@@ -54,11 +57,11 @@ export const Header: React.FC = () => {
             const isActive = idx === currentIdx;
 
             return (
-              <div key={section.id} className="flex-1 rounded-full overflow-hidden bg-white/10">
+              <div key={section.id} className={`flex-1 rounded-full overflow-hidden ${isLight ? 'bg-gray-200' : 'bg-white/10'}`}>
                 <div
                   className={`h-full transition-all duration-500 ease-out ${isCompleted ? 'bg-brand-teal w-full' :
-                      isActive ? 'bg-[#f2654a] w-full' :
-                        'w-0'
+                    isActive ? 'bg-[#f2654a] w-full' :
+                      'w-0'
                     }`}
                 />
               </div>
