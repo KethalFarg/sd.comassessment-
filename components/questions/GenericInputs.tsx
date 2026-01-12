@@ -47,7 +47,13 @@ export const FullButtons: React.FC<Props> = ({ config }) => {
   const microCopyText = selectedValue && config.componentProps?.inlineMicroCopy?.[selectedValue];
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="flex flex-col gap-3 w-full overflow-visible relative z-10">
+      {config.componentProps?.showLifeImage && (
+        <div className="w-[140%] relative left-1/2 -translate-x-1/2 -mt-20 -mb-4 pointer-events-none select-none"
+          style={{ maskImage: 'radial-gradient(ellipse at center top, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse at center top, black 50%, transparent 100%)' }}>
+          <img src="/life.svg" alt="Life" className="w-full h-auto opacity-80" />
+        </div>
+      )}
       {options.map((opt) => {
         const Icon = opt.icon;
         const isSelected = selectedValue === opt.value;

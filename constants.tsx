@@ -153,7 +153,7 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         theme: 'dark',
         type: 'info-slide',
         question: "You're not the only one dealing with this.",
-        subtext: "Millions of people struggle with chronic back, neck, or nerve-related leg pain. Many explore non-surgical spinal decompression to reduce mechanical stress on irritated nerves and discs.\n\nNext, we'll map your pain pattern to see if it looks like the cases that often respond best.",
+        subtext: "Back, neck, and nerve-related pain affect millions of people.\nMany experience similar patterns — including flare-ups, movement sensitivity, or pain that travels.\n\nNext, we'll map your pain pattern to see if it looks like the cases that often respond best.",
         componentProps: {
             image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=800&h=450"
         },
@@ -440,7 +440,8 @@ export const QUIZ_CONFIG: QuestionConfig[] = [
         ],
         componentProps: {
             conditionalInput: true,
-            inputPlaceholder: "What would you like to do?"
+            inputPlaceholder: "What would you like to do?",
+            showLifeImage: true
         },
         next: 'time-availability'
     },

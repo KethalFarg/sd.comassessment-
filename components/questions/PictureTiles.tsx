@@ -90,7 +90,37 @@ export const PictureTiles: React.FC<Props> = ({ config }) => {
                     {/* Dynamic component rendering */}
                     {(() => {
                       const VisualComponent = displayImage as React.ElementType;
-                      return <VisualComponent className="w-full h-full object-cover p-0" />;
+                      const isAge = config.id === 'age';
+                      const isMale = isAge && state.answers.gender === 'male';
+                      const isFemale = isAge && state.answers.gender === 'female';
+
+                      let classes = 'w-full h-full object-cover p-0';
+
+                      if (isFemale) {
+                        if (option.value === '18-34') {
+                          classes += ' scale-[1.26] origin-center translate-y-1';
+                        } else if (option.value === '50-64') {
+                          classes += ' scale-[1.26] origin-center translate-y-1 translate-x-2';
+                        } else if (option.value === '65+') {
+                          classes += ' scale-[1.26] origin-center translate-y-1.5';
+                        } else {
+                          classes += ' scale-[1.26] origin-center';
+                        }
+                      } else if (isMale) {
+                        if (option.value === '18-34') {
+                          classes += ' scale-[1.65] origin-center translate-y-3';
+                        } else if (option.value === '35-49') {
+                          classes += ' scale-[1.65] origin-center translate-y-2';
+                        } else if (option.value === '50-64') {
+                          classes += ' scale-[1.55] origin-center translate-y-3';
+                        } else if (option.value === '65+') {
+                          classes += ' scale-[1.55] origin-center translate-y-4';
+                        } else {
+                          classes += ' scale-[1.55] origin-center';
+                        }
+                      }
+
+                      return <VisualComponent className={classes} />;
                     })()}
                   </div>
                 )

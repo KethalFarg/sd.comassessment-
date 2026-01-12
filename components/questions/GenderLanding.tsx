@@ -38,6 +38,8 @@ export const GenderLanding: React.FC<GenderLandingProps> = ({ config }) => {
                 <div className="absolute -left-[5%] top-[40%] w-[50vh] h-[50vh] rounded-full bg-[#0D5F73]/40 blur-3xl mix-blend-multiply" />
             </div>
 
+
+
             {/* Logo - Top Left (Aligned with Content) */}
             <div className="absolute top-6 left-8 lg:top-10 lg:left-32 xl:left-48 z-50">
                 <img src="https://imagedelivery.net/ye6TBwd9tSy8dGYL2VHjgg/d6d1306d-faaa-4903-087c-83f8d2c0bf00/public" alt="Spinal Decompression" className="h-12 lg:h-16 w-auto" />
@@ -65,14 +67,14 @@ export const GenderLanding: React.FC<GenderLandingProps> = ({ config }) => {
                                 <button
                                     onClick={() => handleSelect('female')}
                                     style={{ boxShadow: SHADOW_LIGHT }}
-                                    className="flex-1 bg-white border-2 border-[#036c7e] text-[#036c7e] font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98] text-lg hover:bg-[#036c7e]/5"
+                                    className="flex-1 bg-[#0098b3] border-2 border-[#0098b3] text-white font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98] text-lg hover:bg-[#007f96]"
                                 >
                                     Female
                                 </button>
                                 <button
                                     onClick={() => handleSelect('male')}
                                     style={{ boxShadow: SHADOW_LIGHT }}
-                                    className="flex-1 bg-white border-2 border-[#036c7e] text-[#036c7e] font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98] text-lg hover:bg-[#036c7e]/5"
+                                    className="flex-1 bg-[#f2674b] border-2 border-[#f2674b] text-white font-bold py-4 px-6 rounded-xl transition-all active:scale-[0.98] text-lg hover:bg-[#d9553a]"
                                 >
                                     Male
                                 </button>

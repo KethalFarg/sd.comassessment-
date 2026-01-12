@@ -2,7 +2,6 @@
 import React from 'react';
 import { QuestionConfig } from '../../types';
 import { useQuiz } from '../../context/QuizContext';
-
 const SHADOW_LIGHT = '5px 5px 10px rgba(1, 75, 92, 0.6), -4px -4px 8px rgba(255, 255, 255, 1)';
 const SHADOW_PRESSED = 'inset 4px 4px 8px rgba(1, 75, 92, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.9)';
 
@@ -27,12 +26,22 @@ export const SplitImageOptions: React.FC<Props> = ({ config }) => {
       {/* Image Side - 5/12 to match Body Map */}
       <div className="w-full md:w-5/12 flex justify-center items-center">
         <div className="relative w-full">
-          {image && (
-            <img
-              src={image}
-              alt="Visual"
-              className="w-full h-auto object-contain max-h-[60vh]"
-            />
+          {config.id === 'duration' ? (
+            <div className="w-full flex justify-center">
+              <img
+                src="/watch.svg"
+                alt="Duration Watch"
+                className="w-auto h-full max-h-[60vh] object-contain scale-[3]"
+              />
+            </div>
+          ) : (
+            image && (
+              <img
+                src={image}
+                alt="Visual"
+                className="w-full h-auto object-contain max-h-[60vh]"
+              />
+            )
           )}
         </div>
       </div>
